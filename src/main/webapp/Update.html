@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Update User by ID</title>
+	<style>
+	h1
+	{
+	color: white;
+	}
+	h1
+	{
+	background-color: #45a049;
+	}
+		form {
+			border: 3px solid #f1f1f1;
+			margin: 20px;
+			padding: 20px;
+			max-width: 500px;
+		}
+		input[type=text] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+		input[type=submit], input[type=button] {
+			background-color: #4CAF50;
+			color: white;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			float: right;
+		}
+		input[type=submit]:hover, input[type=button]:hover {
+			background-color: #45a049;
+		}
+	</style>
+</head>
+<body>
+	<h1>Update User by ID</h1>
+
+	<!-- Form for updating a user by ID -->
+	<form action="/update" method="post">
+		<label for="id">ID</label>
+		<input type="text" id="id" name="id" required>
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" required>
+		<label for="email">Email</label>
+		<input type="text" id="email" name="email" required>
+		<label for="phone">Phone Number</label>
+		<input type="text" id="phone" name="phone" required>
+		<input type="submit" value="Update">
+		<input type="button" value="Cancel" onclick="window.location.href='/index'">
+	</form>
+
+	<!-- JavaScript for pre-filling the form with the user's information -->
+	<script>
+		const urlParams = new URLSearchParams(window.location.search);
+		const id = urlParams.get('id');
+		if (id) {
+			fetch(`/users/${id}`)
+				.then(response => response.json())
+				.then(data => {
+					document.getElementById('id').value = data.id;
+					document.getElementById('name').value = data.name;
+					document.getElementById('email').value = data.email;
+					document.getElementById('phone').value = data.phone;
+				})
+				.catch(error => console.error(error));
+		}
+	</script>
+</body>
+</html>
